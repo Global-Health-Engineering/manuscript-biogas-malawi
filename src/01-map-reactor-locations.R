@@ -32,7 +32,7 @@ leaflet(locations_tidy) %>%
         label = ~location,
         radius = 5,
         stroke = FALSE,
-        fillOpacity = 0.7)
+        fillOpacity = 0.7) %>% 
         #labelOptions = labelOptions(noHide = T,
         #                           textsize = "8px",
         #                           direction = "left",
