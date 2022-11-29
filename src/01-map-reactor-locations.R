@@ -10,16 +10,17 @@ library(dplyr)
 library(tidyr)
 library(leaflet)
 library(mapview)
+library(ggmap)
 
 ## read data
 
 locations <- readr::read_csv(here::here("data/final-sample-coordinates.csv"))
 
 locations_tidy <- locations %>% 
-    separate(col = GPS, into = c("lat", "long"), sep = ", ") %>% 
+    separate(col = GPS, into = c("lat", "lon"), sep = ", ") %>% 
     rename_all(tolower) %>% 
     mutate(lat = as.numeric(lat),
-           long = as.numeric(long))
+           lon = as.numeric(lon))
 
 # leaflet map -------------------------------------------------------------
 
@@ -51,3 +52,17 @@ locations_map <- leaflet(locations_tidy) %>%
 locations_map %>% 
     mapshot(file = "figs/map-biogas-reactors.png")
 
+
+# ggmap map ---------------------------------------------------------------
+
+locations_tidy
+
+qmplot(x = lon, y = lat, data = locations_tidy, color = I("red"), zoom = 14)
+
+library(spData)
+data("us_states", package = "spData")
+
+install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')
+
+
+spData::
