@@ -13,7 +13,7 @@ library(mapview)
 
 ## read data
 
-locations <- readr::read_csv("data/final-sample-coordinates.csv")
+locations <- readr::read_csv(here::here("data/final-sample-coordinates.csv"))
 
 locations_tidy <- locations %>% 
     separate(col = GPS, into = c("lat", "long"), sep = ", ") %>% 
@@ -21,27 +21,33 @@ locations_tidy <- locations %>%
     mutate(lat = as.numeric(lat),
            long = as.numeric(long))
 
-leaflet(locations_tidy) %>% 
+# leaflet map -------------------------------------------------------------
+
+locations_map <- leaflet(locations_tidy) %>% 
     setView(lng = 35.0, 
-             lat = -15.5,
-             zoom = 8) %>% 
+            lat = -15.5,
+            zoom = 8) %>% 
     addTiles() %>% 
     addCircleMarkers(
         lng = ~long, 
         lat = ~lat,
-        label = ~location,
-        radius = 5,
+        label = ~id,
+        radius = 6,
         stroke = FALSE,
-        fillOpacity = 0.7) %>% 
+        fillOpacity = 0.7)
         #labelOptions = labelOptions(noHide = T,
-        #                           textsize = "8px",
-        #                           direction = "left",
-        #                           offset = c(-10, 0),
-        #                           style = list(
-        #                               "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
-        #                               "border-color" = "rgba(0,0,0,0.5)"
-        #                               #"font-style" = "italic"
-        #                           ))) 
-    
+        #                            textsize = "8px",
+        #                            direction = "left",
+        #                            offset = c(-10, 0),
+        #                            style = list(
+        #                                "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
+        #                                "border-color" = "rgba(0,0,0,0.5)",
+        #                                "font-style" = "italic"
+        #                            ))) 
+#
+
+
+
+locations_map %>% 
     mapshot(file = "figs/map-biogas-reactors.png")
 

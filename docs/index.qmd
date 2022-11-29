@@ -1,0 +1,25 @@
+---
+title: "Biogas Reactor Locations"
+format: 
+    html: 
+        toc: true
+editor: source
+execute: 
+  echo: false
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+# Map
+
+```{r}
+source(here::here("src/01-map-reactor-locations.R"))
+```
+
+```{r}
+#| column: screen
+
+locations_map
+```
+
